@@ -1,5 +1,8 @@
 ---
 layout: default
+title: A page
+description: A page A page A page
+[Link to another page](./another-page.html).
 ---
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
