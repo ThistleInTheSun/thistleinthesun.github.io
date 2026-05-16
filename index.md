@@ -1,125 +1,80 @@
 ---
 layout: default
-title: A page
-description: A page A page A page
+title: Thistle in the Sun
+description: A quiet personal homepage for work, writing, and notes in progress.
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+<!--
+Design assumptions:
+- No personal bio, portrait, project list, or brand assets were present in the repository.
+- This pass avoids invented achievements and uses honest content slots.
+- Visual direction: Takram-like warm paper texture + Build-like restraint, derived from the "Thistle in the Sun" name.
+- Signature detail: a quiet botanical/sun motif expressed through type, hairlines, and one warm accent rather than decorative icons.
+-->
 
-[Link to another page](./another-page.html).
+<section class="hero-section" aria-labelledby="hero-title">
+  <div class="hero-kicker">Personal site / Design pass v1</div>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Thistle in the Sun</p>
+      <h1 id="hero-title">A quiet place for work, writing, and unfinished thoughts.</h1>
+      <p class="hero-lede">This homepage is set up as a calm editorial shell. Replace the placeholders with real projects, essays, links, and a short note about what you are making now.</p>
+      <div class="hero-actions" aria-label="Homepage sections">
+        <a class="button button--primary" href="#work">Add work</a>
+        <a class="button button--secondary" href="#writing">Add writing</a>
+      </div>
+    </div>
 
-There should be whitespace between paragraphs.
+    <aside class="hero-card" aria-label="Design notes">
+      <div class="sun-mark" aria-hidden="true"></div>
+      <p class="card-label">Current state</p>
+      <p class="card-title">Ready for real content</p>
+      <p class="card-text">No fake metrics, no stock portrait, no filler quotes. The structure is prepared so each section can earn its place when you have the material.</p>
+    </aside>
+  </div>
+</section>
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+<section id="work" class="content-section section-split">
+  <div>
+    <p class="section-index">01</p>
+    <h2>Work</h2>
+  </div>
+  <div class="item-list">
+    <article class="feature-item">
+      <p class="item-meta">Project slot</p>
+      <h3>Replace with a shipped project</h3>
+      <p>Add a one-sentence outcome, the role you played, and a link to the repository, demo, case study, or product page.</p>
+    </article>
+    <article class="feature-item">
+      <p class="item-meta">Project slot</p>
+      <h3>Replace with an experiment</h3>
+      <p>Use this for smaller prototypes, tools, visual studies, or research notes that show your taste and process.</p>
+    </article>
+  </div>
+</section>
 
-# Header 1
+<section id="writing" class="content-section section-split">
+  <div>
+    <p class="section-index">02</p>
+    <h2>Writing</h2>
+  </div>
+  <div class="item-list">
+    <article class="feature-item">
+      <p class="item-meta">Essay slot</p>
+      <h3>Replace with a recent note</h3>
+      <p>Keep the summary specific: what question the essay answers, who it helps, and why it matters now.</p>
+    </article>
+    <article class="feature-item">
+      <p class="item-meta">Archive slot</p>
+      <h3>Link to a writing index</h3>
+      <p>When the archive grows, this can become a clean index grouped by theme instead of chronology alone.</p>
+    </article>
+  </div>
+</section>
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
+<section id="contact" class="content-section closing-panel" aria-labelledby="contact-title">
+  <p class="section-index">03</p>
+  <h2 id="contact-title">Contact</h2>
+  <p>Put your preferred email, GitHub, social profile, or newsletter link here. Until then, the page stays intentionally quiet.</p>
+  <a class="text-link" href="https://github.com/thistleinthesun">GitHub profile placeholder</a>
+</section>
