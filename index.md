@@ -22,6 +22,7 @@ Design assumptions:
       <div class="hero-actions" aria-label="Homepage sections">
         <a class="button button--primary" href="#work">Add work</a>
         <a class="button button--secondary" href="#writing">Add writing</a>
+        <a class="button button--secondary" href="./md2wechat/">Markdown → 公众号</a>
       </div>
     </div>
 
@@ -46,9 +47,9 @@ Design assumptions:
       <p>Add a one-sentence outcome, the role you played, and a link to the repository, demo, case study, or product page.</p>
     </article>
     <article class="feature-item">
-      <p class="item-meta">Project slot</p>
-      <h3>Replace with an experiment</h3>
-      <p>Use this for smaller prototypes, tools, visual studies, or research notes that show your taste and process.</p>
+      <p class="item-meta">Tool</p>
+      <h3><a href="./md2wechat/">Markdown 转公众号排版</a></h3>
+      <p>纯前端工具：粘贴 Markdown，实时预览公众号样式，一键复制富文本到公众号编辑器。支持多主题、代码高亮、本地草稿。</p>
     </article>
   </div>
 </section>

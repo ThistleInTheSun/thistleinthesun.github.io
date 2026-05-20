@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Markdown 转公众号排版 · Thistle in the Sun</title>
+<meta name="description" content="Markdown 一键转换为微信公众号可粘贴的富文本排版，支持主题切换、代码高亮、复制到剪贴板。" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-light.min.css" />
+<style>
+  :root {
+    --primary: #5b8def;
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --border: #e5e7eb;
+    --text: #1f2328;
+    --muted: #6b7280;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  header h1 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+  }
+  header .sub { color: var(--muted); font-size: 12px; margin-left: 8px; }
+  .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .toolbar label { font-size: 12px; color: var(--muted); }
+  .toolbar select, .toolbar button {
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .toolbar button.primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .toolbar button:hover { filter: brightness(0.97); }
+
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 12px;
+    min-height: 0;
+  }
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+  }
+  .pane {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .pane h2 {
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    background: #fafbfc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  textarea#input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    resize: none;
+    padding: 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    background: #fff;
+  }
+  #preview-wrap {
+    flex: 1;
+    overflow: auto;
+    background: #fff;
+  }
+  #preview {
+    padding: 20px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2328;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 10px;
+  }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Markdown 转公众号排版</h1>
+    <span class="sub">粘贴 Markdown，左侧编辑，右侧预览，一键复制到公众号</span>
+  </div>
+  <div class="toolbar">
+    <label for="theme">主题</label>
+    <select id="theme">
+      <option value="default">默认蓝</option>
+      <option value="elegant">优雅绿</option>
+      <option value="warm">温暖橙</option>
+      <option value="mono">极简灰</option>
+    </select>
+    <label for="font">字号</label>
+    <select id="font">
+      <option value="14px">14px</option>
+      <option value="15px" selected>15px</option>
+      <option value="16px">16px</option>
+      <option value="17px">17px</option>
+    </select>
+    <button id="btn-sample">示例</button>
+    <button id="btn-clear">清空</button>
+    <button id="btn-copy" class="primary">复制到公众号</button>
+  </div>
+</header>
+
+<main>
+  <section class="pane">
+    <h2>Markdown 输入</h2>
+    <textarea id="input" spellcheck="false" placeholder="在这里粘贴你的 Markdown..."></textarea>
+  </section>
+  <section class="pane">
+    <h2>
+      <span>预览（公众号样式）</span>
+      <span id="char-count" style="font-weight:400;"></span>
+    </h2>
+    <div id="preview-wrap">
+      <div id="preview"></div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<footer>
+  纯前端实现 · 数据不上传 ·
+  <a href="../">返回首页</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/typescript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/bash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/json.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/xml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/sql.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/go.min.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
