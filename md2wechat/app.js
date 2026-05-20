@@ -235,12 +235,7 @@
       const tag = ordered ? 'ol' : 'ul';
       return `<${tag} style="${styles[tag]}">${body}</${tag}>`;
     };
-    r.listitem = text => {
-      // marked 在 loose list 中会把 li 内容包一层 <p>，公众号粘贴后会多一行空隙
-      // 这里把单个顶层 <p> 解开，让 li 内容保持内联，与 Markdown 表现一致
-      const stripped = text.replace(/^\s*<p[^>]*>([\s\S]*?)<\/p>\s*$/i, '$1');
-      return `<li style="${styles.li}">${stripped}</li>`;
-    };
+    r.listitem = text => `<li style="${styles.li}">${text}</li>`;
     r.link = (href, title, text) =>
       `<a style="${styles.a}" href="${href}"${title ? ` title="${title}"` : ''}>${text}</a>`;
     r.strong = text => `<strong style="${styles.strong}">${text}</strong>`;
@@ -293,6 +288,18 @@
     const html = marked.parse(md);
     // 用一个外层 section 包裹，统一字体与行高（粘贴公众号会保留外层 style）
     $preview.innerHTML = `<section style="${styles.wrapper}">${html}</section>`;
+
+    // 修复：marked 把 loose list 的 li 内容包了一层 <p>，公众号粘贴后会在每个列表项后多一个换行
+    // 这里把每个 <li> 中"仅一个直接 <p> 子节点"的 <p> 拆掉，保持与 Markdown 一致的内联表现
+    $preview.querySelectorAll('li').forEach(li => {
+      const children = Array.from(li.children);
+      if (children.length === 1 && children[0].tagName === 'P') {
+        const p = children[0];
+        while (p.firstChild) li.insertBefore(p.firstChild, p);
+        li.removeChild(p);
+      }
+    });
+
     $count.textContent = `${md.length} 字符`;
     saveDraft(md);
   }
