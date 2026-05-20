@@ -235,7 +235,12 @@
       const tag = ordered ? 'ol' : 'ul';
       return `<${tag} style="${styles[tag]}">${body}</${tag}>`;
     };
-    r.listitem = text => `<li style="${styles.li}">${text}</li>`;
+    r.listitem = text => {
+      // marked 在 loose list 中会把 li 内容包一层 <p>，公众号粘贴后会多一行空隙
+      // 这里把单个顶层 <p> 解开，让 li 内容保持内联，与 Markdown 表现一致
+      const stripped = text.replace(/^\s*<p[^>]*>([\s\S]*?)<\/p>\s*$/i, '$1');
+      return `<li style="${styles.li}">${stripped}</li>`;
+    };
     r.link = (href, title, text) =>
       `<a style="${styles.a}" href="${href}"${title ? ` title="${title}"` : ''}>${text}</a>`;
     r.strong = text => `<strong style="${styles.strong}">${text}</strong>`;
