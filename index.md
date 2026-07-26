@@ -26,9 +26,19 @@ description: A cat distilling knowledge — reading, notes, and tools.
   </div>
 </section>
 
-<section id="tools" class="content-section section-split">
+<section id="reading" class="content-section section-split">
   <div>
     <p class="section-index">01</p>
+    <h2>Reading</h2>
+  </div>
+  <div class="home-books" id="homeBooks">
+    <p class="book-empty" id="homeBooksEmpty">No books yet.</p>
+  </div>
+</section>
+
+<section id="tools" class="content-section section-split">
+  <div>
+    <p class="section-index">02</p>
     <h2>Tool</h2>
   </div>
   <div class="item-list">
@@ -39,3 +49,52 @@ description: A cat distilling knowledge — reading, notes, and tools.
     </article>
   </div>
 </section>
+
+<script>
+(function () {
+  var $container = document.getElementById('homeBooks');
+  var $empty = document.getElementById('homeBooksEmpty');
+
+  fetch('./data/reading.json', { cache: 'no-store' })
+    .then(function (res) { return res.json(); })
+    .then(function (json) {
+      if (!json.books || !json.books.length) return;
+      $empty.style.display = 'none';
+      var row = document.createElement('div');
+      row.className = 'home-books__row';
+      json.books.forEach(function (book) {
+        var a = document.createElement('a');
+        a.href = './reading.html';
+        a.className = 'home-book-card';
+        var hue = hashString(book.title);
+        if (book.cover) {
+          a.style.backgroundImage = 'url(' + book.cover.replace(/'/g, '\\27') + ')';
+          a.style.backgroundSize = 'cover';
+          a.style.backgroundPosition = 'center';
+        } else {
+          var h = hue % 360;
+          a.style.background = 'linear-gradient(135deg,hsl(' + h + ',35%,45%),hsl(' + ((h + 40) % 360) + ',45%,55%))';
+        }
+        var overlay = document.createElement('div');
+        overlay.className = 'home-book-card__overlay';
+        var title = document.createElement('span');
+        title.className = 'home-book-card__title';
+        title.textContent = book.title;
+        overlay.appendChild(title);
+        a.appendChild(overlay);
+        row.appendChild(a);
+      });
+      $container.appendChild(row);
+    })
+    .catch(function () {});
+
+  function hashString(str) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  }
+})();
+</script>

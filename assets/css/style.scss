@@ -334,6 +334,64 @@ a {
   color: var(--quiet);
 }
 
+/* ── Homepage book cards ── */
+
+.home-books__row {
+  display: flex;
+  gap: clamp(10px, 1.8vw, 16px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--quiet) transparent;
+  padding-bottom: 6px;
+}
+
+.home-books__row::-webkit-scrollbar {
+  height: 4px;
+}
+
+.home-books__row::-webkit-scrollbar-thumb {
+  background: var(--quiet);
+  border-radius: 2px;
+}
+
+.home-book-card {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(110px, 14vw, 150px);
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.home-book-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(74, 54, 35, 0.14);
+}
+
+.home-book-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(10px, 1.4vw, 14px);
+  background: linear-gradient(
+    to top,
+    rgba(38, 35, 31, 0.78) 0%,
+    rgba(38, 35, 31, 0.15) 60%,
+    transparent 100%
+  );
+}
+
+.home-book-card__title {
+  font-family: var(--serif);
+  font-size: clamp(0.78rem, 1.2vw, 0.92rem);
+  line-height: 1.2;
+  color: var(--white);
+}
+
 /* ── Reading page ── */
 
 .reading-hero {
