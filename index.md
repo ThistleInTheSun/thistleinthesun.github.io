@@ -26,7 +26,7 @@ description: A cat distilling knowledge — reading, notes, and tools.
   </div>
 </section>
 
-<section id="reading" class="content-section section-split section-split--stretch">
+<section id="reading" class="content-section section-split">
   <div>
     <p class="section-index">01</p>
     <h2>Reading</h2>
@@ -62,32 +62,25 @@ description: A cat distilling knowledge — reading, notes, and tools.
       $empty.style.display = 'none';
       var row = document.createElement('div');
       row.className = 'home-books__row';
-      var palette = [
-        'linear-gradient(145deg, #b8906e, #a07858)',
-        'linear-gradient(145deg, #8a9a7e, #6e8268)',
-        'linear-gradient(145deg, #a888a0, #8e6e86)',
-        'linear-gradient(145deg, #9a8870, #7e6e58)',
-        'linear-gradient(145deg, #7e8e9a, #64788a)',
-        'linear-gradient(145deg, #b09878, #968060)'
-      ];
-      json.books.forEach(function (book, i) {
+      json.books.forEach(function (book) {
         var a = document.createElement('a');
         a.href = './reading.html';
         a.className = 'home-book-card';
+        var title = document.createElement('span');
+        title.textContent = book.title;
         if (book.cover) {
           a.style.backgroundImage = 'url(' + book.cover.replace(/'/g, '\\27') + ')';
           a.style.backgroundSize = 'cover';
           a.style.backgroundPosition = 'center';
+          var overlay = document.createElement('div');
+          overlay.className = 'home-book-card__overlay';
+          title.className = 'home-book-card__title';
+          overlay.appendChild(title);
+          a.appendChild(overlay);
         } else {
-          a.style.background = palette[i % palette.length];
+          title.className = 'home-book-card__title--plain';
+          a.appendChild(title);
         }
-        var overlay = document.createElement('div');
-        overlay.className = 'home-book-card__overlay';
-        var title = document.createElement('span');
-        title.className = 'home-book-card__title';
-        title.textContent = book.title;
-        overlay.appendChild(title);
-        a.appendChild(overlay);
         row.appendChild(a);
       });
       $container.appendChild(row);
