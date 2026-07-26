@@ -357,6 +357,7 @@ a {
 
 .home-book-card {
   position: relative;
+  display: block;
   flex-shrink: 0;
   width: clamp(140px, 18vw, 190px);
   aspect-ratio: 1;
