@@ -1,3 +1,25 @@
 {
-  "books": []
+  "books": [
+    {
+      "id": "sample1",
+      "title": "思考，快与慢",
+      "reason": "想了解人类决策的非理性，理解系统1和系统2如何影响日常判断",
+      "cover": "",
+      "notes": []
+    },
+    {
+      "id": "sample2",
+      "title": "The Design of Everyday Things",
+      "reason": "理解好设计的本质，为什么有些门总是让人不知道该推还是拉",
+      "cover": "",
+      "notes": []
+    },
+    {
+      "id": "sample3",
+      "title": "穷查理宝典",
+      "reason": "学习查理·芒格的多元思维模型，跨学科思考",
+      "cover": "",
+      "notes": []
+    }
+  ]
 }

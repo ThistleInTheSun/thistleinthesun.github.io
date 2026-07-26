@@ -9,30 +9,23 @@ title: Reading
   <p class="reading-lede">A shelf for books worth remembering, and the thoughts they left behind.</p>
 </section>
 
-<section class="reading-layout">
-  <aside class="book-sidebar" id="bookSidebar">
-    <p class="card-label book-sidebar__label">Library</p>
-    <ul class="book-list" id="bookList"></ul>
-    <p class="book-empty" id="emptyShelf">No books yet.</p>
-  </aside>
+<section class="reading-cards-section">
+  <div class="reading-cards-header">
+    <p class="card-label">Library</p>
+  </div>
+  <div class="reading-cards-scroll" id="cardsScroll">
+    <div class="reading-cards-row" id="cardsRow"></div>
+  </div>
+  <p class="book-empty" id="emptyShelf">No books yet.</p>
+</section>
 
-  <div class="book-main" id="bookMain">
-    <div class="book-welcome" id="bookWelcome">
-      <div class="feature-item">
-        <p class="item-meta">Welcome</p>
-        <h3>Select a book from the shelf</h3>
-        <p>Each book keeps its own reading notes.</p>
-      </div>
-    </div>
-
-    <div class="book-detail" id="bookDetail" hidden>
-      <div>
-        <p class="item-meta" id="detailReason"></p>
-        <h2 class="book-detail__title" id="detailTitle"></h2>
-      </div>
-      <div class="note-list" id="noteList"></div>
-      <p class="book-empty" id="emptyNotes" hidden>No notes yet.</p>
-    </div>
+<section class="reading-notes-section" id="notesSection" hidden>
+  <div class="reading-notes-inner">
+    <button class="notes-back-btn" id="notesBackBtn" type="button">&larr; Back</button>
+    <p class="item-meta" id="detailReason"></p>
+    <h2 class="book-detail__title" id="detailTitle"></h2>
+    <div class="note-list" id="noteList"></div>
+    <p class="book-empty" id="emptyNotes" hidden>No notes yet.</p>
   </div>
 </section>
 
@@ -40,57 +33,80 @@ title: Reading
 (function () {
   var DATA_URL = './data/reading.json';
   var data = { books: [] };
-  var activeBookId = null;
 
-  var $bookList = document.getElementById('bookList');
+  var $cardsRow = document.getElementById('cardsRow');
+  var $cardsScroll = document.getElementById('cardsScroll');
   var $emptyShelf = document.getElementById('emptyShelf');
-  var $bookWelcome = document.getElementById('bookWelcome');
-  var $bookDetail = document.getElementById('bookDetail');
+  var $notesSection = document.getElementById('notesSection');
   var $detailTitle = document.getElementById('detailTitle');
   var $detailReason = document.getElementById('detailReason');
   var $noteList = document.getElementById('noteList');
   var $emptyNotes = document.getElementById('emptyNotes');
 
+  document.getElementById('notesBackBtn').addEventListener('click', function () {
+    $notesSection.hidden = true;
+    $cardsScroll.style.display = '';
+    document.querySelector('.reading-cards-header').style.display = '';
+    $emptyShelf.style.display = data.books.length ? 'none' : 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   fetch(DATA_URL, { cache: 'no-store' })
     .then(function (res) { return res.json(); })
     .then(function (json) {
       data = json;
-      renderSidebar();
+      renderCards();
     })
     .catch(function () {
-      renderSidebar();
+      renderCards();
     });
 
-  function getBook(id) {
-    return data.books.find(function (b) { return b.id === id; });
-  }
-
-  function renderSidebar() {
-    $bookList.innerHTML = '';
+  function renderCards() {
+    $cardsRow.innerHTML = '';
     $emptyShelf.style.display = data.books.length ? 'none' : 'block';
-    data.books.forEach(function (book) {
-      var li = document.createElement('li');
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'book-list__item' + (book.id === activeBookId ? ' is-active' : '');
-      btn.innerHTML = '<span class="book-list__title">' + escapeHtml(book.title) + '</span>'
-        + (book.reason ? '<span class="book-list__reason">' + escapeHtml(book.reason) + '</span>' : '');
-      btn.addEventListener('click', function () { selectBook(book.id); });
-      li.appendChild(btn);
-      $bookList.appendChild(li);
+    data.books.forEach(function (book, index) {
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'book-card';
+      card.style.animationDelay = (index * 80) + 'ms';
+
+      var style = '';
+      if (book.cover) {
+        style = 'background-image:url(' + escapeAttr(book.cover) + ');background-size:cover;background-position:center;';
+      } else {
+        var hue = (hashString(book.title) % 360);
+        style = 'background:linear-gradient(135deg,hsl(' + hue + ',35%,45%),hsl(' + ((hue + 40) % 360) + ',45%,55%));';
+      }
+      card.setAttribute('style', style);
+
+      var overlay = document.createElement('div');
+      overlay.className = 'book-card__overlay';
+
+      var title = document.createElement('span');
+      title.className = 'book-card__title';
+      title.textContent = book.title;
+
+      var reason = document.createElement('span');
+      reason.className = 'book-card__reason';
+      reason.textContent = book.reason || '';
+
+      overlay.appendChild(title);
+      if (book.reason) overlay.appendChild(reason);
+      card.appendChild(overlay);
+
+      card.addEventListener('click', function () { showNotes(book); });
+      $cardsRow.appendChild(card);
     });
   }
 
-  function selectBook(id) {
-    activeBookId = id;
-    var book = getBook(id);
-    if (!book) return;
-    $bookWelcome.hidden = true;
-    $bookDetail.hidden = false;
+  function showNotes(book) {
+    $cardsScroll.style.display = 'none';
+    document.querySelector('.reading-cards-header').style.display = 'none';
+    $emptyShelf.style.display = 'none';
+    $notesSection.hidden = false;
     $detailTitle.textContent = book.title;
     $detailReason.textContent = book.reason || '';
     renderNotes(book);
-    renderSidebar();
   }
 
   function renderNotes(book) {
@@ -118,6 +134,19 @@ title: Reading
     return div.innerHTML;
   }
 
-  renderSidebar();
+  function escapeAttr(str) {
+    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function hashString(str) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  }
+
+  renderCards();
 })();
 </script>
