@@ -26,7 +26,7 @@ description: A cat distilling knowledge — reading, notes, and tools.
   </div>
 </section>
 
-<section id="reading" class="content-section section-split">
+<section id="reading" class="content-section section-split section-split--stretch">
   <div>
     <p class="section-index">01</p>
     <h2>Reading</h2>
@@ -62,18 +62,24 @@ description: A cat distilling knowledge — reading, notes, and tools.
       $empty.style.display = 'none';
       var row = document.createElement('div');
       row.className = 'home-books__row';
-      json.books.forEach(function (book) {
+      var palette = [
+        'linear-gradient(145deg, #b8906e, #a07858)',
+        'linear-gradient(145deg, #8a9a7e, #6e8268)',
+        'linear-gradient(145deg, #a888a0, #8e6e86)',
+        'linear-gradient(145deg, #9a8870, #7e6e58)',
+        'linear-gradient(145deg, #7e8e9a, #64788a)',
+        'linear-gradient(145deg, #b09878, #968060)'
+      ];
+      json.books.forEach(function (book, i) {
         var a = document.createElement('a');
         a.href = './reading.html';
         a.className = 'home-book-card';
-        var hue = hashString(book.title);
         if (book.cover) {
           a.style.backgroundImage = 'url(' + book.cover.replace(/'/g, '\\27') + ')';
           a.style.backgroundSize = 'cover';
           a.style.backgroundPosition = 'center';
         } else {
-          var h = hue % 360;
-          a.style.background = 'linear-gradient(135deg,hsl(' + h + ',35%,45%),hsl(' + ((h + 40) % 360) + ',45%,55%))';
+          a.style.background = palette[i % palette.length];
         }
         var overlay = document.createElement('div');
         overlay.className = 'home-book-card__overlay';
@@ -87,14 +93,5 @@ description: A cat distilling knowledge — reading, notes, and tools.
       $container.appendChild(row);
     })
     .catch(function () {});
-
-  function hashString(str) {
-    var hash = 0;
-    for (var i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
-      hash |= 0;
-    }
-    return Math.abs(hash);
-  }
 })();
 </script>
