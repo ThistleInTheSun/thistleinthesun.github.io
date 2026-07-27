@@ -5,7 +5,7 @@ description: A cat distilling knowledge — reading, notes, and tools.
 ---
 
 <section class="hero-section" aria-labelledby="hero-title">
-  <div class="hero-kicker">Distilling Cat / A cat distilling knowledge</div>
+  <div class="hero-kicker">Distilling Cat</div>
   <div class="hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">Distilling Cat</p>
