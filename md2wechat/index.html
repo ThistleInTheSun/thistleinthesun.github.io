@@ -21,23 +21,21 @@
     --sun: #c86f3b;
     --thistle: #524a75;
     --white: #fffaf2;
+    --shadow: 0 30px 80px rgba(74, 54, 35, 0.08);
     --display: "Instrument Serif", "Newsreader", Georgia, serif;
     --serif: "Newsreader", Georgia, serif;
     --body: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --primary: var(--sun);
   }
   * { box-sizing: border-box; }
-  html { width: 100%; margin: 0; padding: 0; }
-  body { height: 100%; margin: 0; }
+  html { margin: 0; padding: 0; }
   body {
-    width: 100%;
-    min-width: 100%;
-    margin: 0 auto;
+    min-height: 100vh;
+    margin: 0;
     font-family: var(--body);
     color: var(--ink);
     display: flex;
     flex-direction: column;
-    align-items: stretch;
     background:
       radial-gradient(circle at 78% 14%, rgba(200, 111, 59, 0.12), transparent 30rem),
       linear-gradient(90deg, rgba(38, 35, 31, 0.025) 1px, transparent 1px),
@@ -55,88 +53,137 @@
       repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.24) 1px, transparent 1px, transparent 4px);
     opacity: 0.34;
   }
-  header {
-    width: 100%;
-    max-width: 1400px;
+
+  /* ── Header (matches site-shell + site-nav) ── */
+  .site-shell {
+    width: min(1180px, calc(100% - 40px));
     margin: 0 auto;
-    background: rgba(255, 250, 242, 0.6);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-    padding: 14px clamp(24px, 5vw, 48px);
+    padding: 28px 0 0;
+  }
+  .site-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
+    gap: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
   }
-  .header-brand {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .header-brand .wordmark {
-    font-family: var(--display);
-    font-size: 1.2rem;
-    color: var(--ink);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .header-brand .wordmark__glyph {
+  .wordmark {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--sun);
-    color: var(--white);
-    font-family: var(--display);
+    gap: 12px;
+    font-family: var(--serif);
     font-size: 1rem;
-    font-style: italic;
-  }
-  header h1 {
-    font-size: 15px;
-    margin: 0;
-    font-weight: 500;
-    color: var(--muted);
-  }
-  .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .toolbar label { font-size: 12px; color: var(--muted); }
-  .toolbar select, .toolbar button {
-    border: 1px solid var(--line);
-    background: var(--white);
+    font-weight: 400;
+    text-decoration: none;
     color: var(--ink);
-    border-radius: 10px;
-    padding: 7px 12px;
-    font-size: 13px;
-    font-family: var(--body);
-    cursor: pointer;
-    transition: border-color 180ms ease;
   }
-  .toolbar select:hover, .toolbar button:hover {
-    border-color: var(--sun);
-  }
-  .toolbar button.primary {
-    background: var(--sun);
+  .wordmark__glyph {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
     color: var(--white);
-    border-color: var(--sun);
-    font-weight: 500;
+    background: var(--ink);
+    border-radius: 50%;
+    font-family: var(--display);
+    font-size: 1.28rem;
+    line-height: 1;
   }
-  .toolbar button.primary:hover {
-    filter: brightness(1.05);
+  .nav-links {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(16px, 3vw, 36px);
+  }
+  .nav-links a {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── Page header ── */
+  .page-header {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: clamp(40px, 7vw, 72px) 0 clamp(24px, 4vw, 40px);
+  }
+  .page-header__kicker {
+    margin: 0;
+    color: var(--thistle);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .page-header__title {
+    margin: 12px 0 0;
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+  }
+  .page-header__lede {
+    max-width: 620px;
+    margin: 20px 0 0;
+    color: var(--muted);
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.55;
   }
 
+  /* ── Toolbar ── */
+  .toolbar-wrap {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 0 0 clamp(16px, 3vw, 24px);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .toolbar-wrap label { font-size: 12px; color: var(--muted); }
+  .toolbar-wrap select, .toolbar-wrap button {
+    border: 1px solid var(--line);
+    background: rgba(255, 250, 242, 0.6);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--body);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  }
+  .toolbar-wrap select:hover, .toolbar-wrap button:hover {
+    border-color: var(--sun);
+    transform: translateY(-1px);
+  }
+  .toolbar-wrap button.primary {
+    background: var(--ink);
+    color: var(--white);
+    border-color: var(--ink);
+  }
+  .toolbar-wrap button.primary:hover {
+    border-color: var(--sun);
+    filter: none;
+  }
+
+  /* ── Main panes ── */
   main {
-    width: 100%;
-    max-width: 1400px;
+    width: min(1180px, calc(100% - 40px));
     margin: 0 auto;
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 20px clamp(24px, 5vw, 48px);
+    gap: 18px;
+    padding: 0 0 clamp(40px, 7vw, 72px);
     min-height: 0;
   }
   @media (max-width: 900px) {
@@ -145,7 +192,8 @@
   .pane {
     background: rgba(255, 250, 242, 0.55);
     border: 1px solid var(--line);
-    border-radius: 28px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -153,11 +201,11 @@
   }
   .pane h2 {
     margin: 0;
-    padding: 10px 16px;
-    font-size: 12px;
+    padding: 12px 20px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--muted);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     border-bottom: 1px solid var(--line);
     background: rgba(255, 250, 242, 0.4);
@@ -170,7 +218,7 @@
     border: 0;
     outline: none;
     resize: none;
-    padding: 16px;
+    padding: 18px 20px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 14px;
     line-height: 1.6;
@@ -183,7 +231,7 @@
     background: transparent;
   }
   #preview {
-    padding: 20px;
+    padding: 22px;
     max-width: 760px;
     margin: 0 auto;
   }
@@ -195,7 +243,7 @@
     background: var(--ink);
     color: var(--white);
     padding: 10px 20px;
-    border-radius: 12px;
+    border-radius: 999px;
     font-size: 13px;
     font-family: var(--body);
     opacity: 0;
@@ -205,46 +253,66 @@
   }
   .toast.show { opacity: 1; }
 
-  footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 12px clamp(24px, 5vw, 48px) 18px;
+  /* ── Footer (matches site-footer) ── */
+  .site-footer {
+    display: flex;
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 28px 0 42px;
     border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.82rem;
+    justify-content: space-between;
+    gap: 24px;
   }
-  footer a { color: var(--thistle); text-decoration: underline; text-underline-offset: 4px; }
+  .site-footer__note { color: var(--quiet); }
+  .site-footer a { color: var(--thistle); text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 860px) {
+    .site-footer { align-items: flex-start; flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-brand">
+<header class="site-shell" role="banner">
+  <nav class="site-nav" aria-label="Primary navigation">
     <a class="wordmark" href="../">
       <span class="wordmark__glyph">T</span>
       <span>Distilling Cat</span>
     </a>
-    <h1>Markdown 转公众号排版</h1>
-  </div>
-  <div class="toolbar">
-    <label for="theme">主题</label>
-    <select id="theme">
-      <option value="default">默认蓝</option>
-      <option value="elegant">优雅绿</option>
-      <option value="warm">温暖橙</option>
-      <option value="mono">极简灰</option>
-    </select>
-    <label for="font">字号</label>
-    <select id="font">
-      <option value="14px">14px</option>
-      <option value="15px" selected>15px</option>
-      <option value="16px">16px</option>
-      <option value="17px">17px</option>
-    </select>
-    <button id="btn-sample">示例</button>
-    <button id="btn-clear">清空</button>
-    <button id="btn-copy" class="primary">复制到公众号</button>
-  </div>
+    <div class="nav-links">
+      <a href="../reading.html">Reading</a>
+      <a href="../#tools">Tool</a>
+    </div>
+  </nav>
 </header>
+
+<div class="page-header">
+  <p class="page-header__kicker">Tool</p>
+  <h1 class="page-header__title">Markdown 转公众号排版</h1>
+  <p class="page-header__lede">一键将 Markdown 转换为微信公众号可粘贴的富文本排版，支持主题切换、代码高亮、复制到剪贴板。</p>
+</div>
+
+<div class="toolbar-wrap">
+  <label for="theme">主题</label>
+  <select id="theme">
+    <option value="default">默认蓝</option>
+    <option value="elegant">优雅绿</option>
+    <option value="warm">温暖橙</option>
+    <option value="mono">极简灰</option>
+  </select>
+  <label for="font">字号</label>
+  <select id="font">
+    <option value="14px">14px</option>
+    <option value="15px" selected>15px</option>
+    <option value="16px">16px</option>
+    <option value="17px">17px</option>
+  </select>
+  <button id="btn-sample">示例</button>
+  <button id="btn-clear">清空</button>
+  <button id="btn-copy" class="primary">复制到公众号</button>
+</div>
 
 <main>
   <section class="pane">
@@ -264,8 +332,9 @@
 
 <div id="toast" class="toast"></div>
 
-<footer>
-  <span>Distilling Cat</span> · 纯前端实现，数据不上传 · <a href="../">返回首页</a>
+<footer class="site-footer">
+  <span>Distilling Cat</span>
+  <span class="site-footer__note">纯前端实现，数据不上传 · <a href="../">返回首页</a></span>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
