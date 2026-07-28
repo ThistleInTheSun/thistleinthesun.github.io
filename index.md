@@ -9,7 +9,7 @@ description: A cat distilling knowledge — reading, notes, and tools.
   <div class="hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">Distilling Cat</p>
-      <h1 id="hero-title">Distilling knowledge from books and thoughts.</h1>
+      <h1 id="hero-title">Distilling World</h1>
       <p class="hero-lede">Reading notes, small tools, and the occasional idea worth keeping. This is the shelf where it all accumulates.</p>
       <div class="hero-actions" aria-label="Homepage sections">
         <a class="button button--primary" href="./reading.html">Reading</a>
