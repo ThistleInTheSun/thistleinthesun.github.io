@@ -3,4 +3,10 @@ _site
 Gemfile.lock
 *.gem
 .jekyll-cache
-.jekyll-cache
+.jekyll-metadata
+
+# Bundler local config
+.bundle/
+
+# macOS
+.DS_Store
