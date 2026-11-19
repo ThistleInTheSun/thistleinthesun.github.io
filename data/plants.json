@@ -1,0 +1,81 @@
+{
+  "plants": [
+    {
+      "id": "yueji",
+      "name": "月季",
+      "note": "",
+      "photos": [
+        {
+          "src": "./assets/plants/月季2026-2-9.jpg",
+          "date": "2026-02-09",
+          "mood": "到家第一天"
+        },
+        {
+          "src": "./assets/plants/月季2026-2-9-2.jpg",
+          "date": "2026-02-09",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-2-11.jpg",
+          "date": "2026-02-11",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-2-12.jpg",
+          "date": "2026-02-12",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-2-13.jpg",
+          "date": "2026-02-13",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-2-13-2.jpg",
+          "date": "2026-02-13",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-2-22.jpg",
+          "date": "2026-02-22",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-2-26.jpg",
+          "date": "2026-02-26",
+          "mood": "打了第一个花苞，可惜因为盆大+回南天闷根，还没开花就没了"
+        },
+        {
+          "src": "./assets/plants/月季2026-3-12.jpg",
+          "date": "2026-03-12",
+          "mood": "第二个花苞"
+        },
+        {
+          "src": "./assets/plants/月季2026-3-13.jpg",
+          "date": "2026-03-13",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-3-17.jpg",
+          "date": "2026-03-17",
+          "mood": "第一朵彻底绽放的花"
+        },
+        {
+          "src": "./assets/plants/月季2026-3-18.jpg",
+          "date": "2026-03-18",
+          "mood": ""
+        },
+        {
+          "src": "./assets/plants/月季2026-3-19.jpg",
+          "date": "2026-03-19",
+          "mood": "花落前"
+        },
+        {
+          "src": "./assets/plants/月季2026-3-19-2.jpg",
+          "date": "2026-03-19",
+          "mood": ""
+        }
+      ]
+    }
+  ]
+}
