@@ -684,12 +684,27 @@ a {
 }
 
 .plant-photos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  display: flex;
   gap: clamp(18px, 3vw, 28px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--quiet) transparent;
+  padding-bottom: 8px;
+}
+
+.plant-photos::-webkit-scrollbar {
+  height: 6px;
+}
+
+.plant-photos::-webkit-scrollbar-thumb {
+  background: var(--quiet);
+  border-radius: 3px;
 }
 
 .plant-photo {
+  flex-shrink: 0;
+  width: clamp(160px, 22vw, 220px);
   margin: 0;
   animation: card-in 400ms ease both;
 }
@@ -767,7 +782,11 @@ a {
   }
 
   .plant-photos {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+  }
+
+  .plant-photo {
+    width: clamp(140px, 42vw, 180px);
   }
 }
 
